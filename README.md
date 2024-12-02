@@ -1,2 +1,0 @@
-# ProyectoTaylor
-Taylor Swift
