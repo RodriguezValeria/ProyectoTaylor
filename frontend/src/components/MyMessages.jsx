@@ -19,19 +19,19 @@ const songsEmpty = [
   },
 ];
 
-export default function MyProfile({handleLogout}) {
+export default function MyProfile({handleLogout, user}) {
   const [canciones, setCanciones] = useState([]);
   const [selectedChat, setSelectedChat] = React.useState(songsEmpty[0]);
 
   useEffect(() => {
-    const storedSongs = localStorage.getItem("canciones");
+    const storedSongs = localStorage.getItem(user);
     if (!storedSongs) {
-      localStorage.setItem("canciones", JSON.stringify(songsEmpty));
+      localStorage.setItem(user, JSON.stringify(songsEmpty));
       setCanciones(songsEmpty);
     } else {
       setCanciones(JSON.parse(storedSongs));
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (canciones.length > 0) {
@@ -44,7 +44,7 @@ export default function MyProfile({handleLogout}) {
       chat.id === chatId ? { ...chat, messages: newMessages } : chat
     );
     setCanciones(updatedChats);
-    localStorage.setItem("canciones", JSON.stringify(updatedChats));
+    localStorage.setItem(user, JSON.stringify(updatedChats));
   };
 
 
@@ -83,9 +83,10 @@ export default function MyProfile({handleLogout}) {
           setSelectedChat={setSelectedChat}
           handleLogout={handleLogout}
           updateChats={updateChats}
+          user={user}
         />
       </Sheet>
-      <MessagesPane chat={selectedChat} updateChats={updateChats} />
+      <MessagesPane chat={selectedChat} updateChats={updateChats} user={user} />
     </Sheet>
   );
 }

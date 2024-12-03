@@ -16,7 +16,7 @@ export default function ChatsPane({
   selectedChatId,
   handleLogout,
   setCanciones,
-  updateChats,
+  user,
 }) {
   const handleNewChat = () => {
     const newChat = {
@@ -32,14 +32,14 @@ export default function ChatsPane({
     const updatedSongs = [...songs, newChat];
     setSelectedChat(newChat);
     setCanciones(updatedSongs);
-    localStorage.setItem("canciones", JSON.stringify(updatedSongs));
+    localStorage.setItem(user, JSON.stringify(updatedSongs));
     setSelectedChat(newChat);
   };
 
   const handleDeleteChat = (chatId) => {
     const updatedSongs = songs.filter((chat) => chat.id !== chatId);
     setCanciones(updatedSongs);
-    localStorage.setItem("canciones", JSON.stringify(updatedSongs));
+    localStorage.setItem(user, JSON.stringify(updatedSongs));
     if (selectedChatId === chatId && updatedSongs.length > 0) {
       setSelectedChat(updatedSongs[0]);
     } else if (updatedSongs.length === 0) {

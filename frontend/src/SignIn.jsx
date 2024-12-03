@@ -17,6 +17,8 @@ import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import GoogleIcon from "./GoogleIcon";
 
+import { GoogleLogin } from "@react-oauth/google";
+
 function ColorSchemeToggle(props) {
   const { onClick, ...other } = props;
   const { mode, setMode } = useColorScheme();
@@ -41,12 +43,7 @@ function ColorSchemeToggle(props) {
   );
 }
 
-export default function JoySignInSideTemplate({ onLogin }) {
-  const handleLogin = () => {
-    const fakeAuthToken = "token_simulado"; // Simula el token de autenticación
-    onLogin(fakeAuthToken);
-  };
-
+export default function JoySignInSideTemplate({ onLogin, handleFailure }) {
   return (
     <>
       <GlobalStyles
@@ -122,70 +119,19 @@ export default function JoySignInSideTemplate({ onLogin }) {
                 <Typography component="h1" level="h3">
                   Sign in
                 </Typography>
-                <Typography level="body-sm">
-                  New to company?{" "}
-                  <Link href="#replace-with-a-link" level="title-sm">
-                    Sign up!
-                  </Link>
-                </Typography>
               </Stack>
-              <Button
+              {/* <Button
                 variant="soft"
                 color="neutral"
                 fullWidth
                 startDecorator={<GoogleIcon />}
               >
                 Continue with Google
-              </Button>
-            </Stack>
-            <Divider
-              sx={(theme) => ({
-                [theme.getColorSchemeSelector("light")]: {
-                  color: { xs: "#FFF", md: "text.tertiary" },
-                },
-              })}
-            >
-              or
-            </Divider>
-            <Stack sx={{ gap: 4, mt: 2 }}>
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  const formElements = event.currentTarget.elements;
-                  const data = {
-                    email: formElements.email.value,
-                    password: formElements.password.value,
-                    persistent: formElements.persistent.checked,
-                  };
-                  alert(JSON.stringify(data, null, 2));
-                }}
-              >
-                <FormControl required>
-                  <FormLabel>Email</FormLabel>
-                  <Input type="email" name="email" />
-                </FormControl>
-                <FormControl required>
-                  <FormLabel>Password</FormLabel>
-                  <Input type="password" name="password" />
-                </FormControl>
-                <Stack sx={{ gap: 4, mt: 2 }}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Checkbox size="sm" label="Remember me" name="persistent" />
-                    <Link level="title-sm" href="#replace-with-a-link">
-                      Forgot your password?
-                    </Link>
-                  </Box>
-                  <Button type="submit" fullWidth onClick={handleLogin}>
-                    Sign in
-                  </Button>
-                </Stack>
-              </form>
+              </Button> */}
+              {/* Google oauth login */}
+      
+
+              <GoogleLogin onSuccess={onLogin} onError={handleFailure}  width={"300"} />
             </Stack>
           </Box>
           <Box component="footer" sx={{ py: 3 }}>
